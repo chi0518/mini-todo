@@ -13,23 +13,21 @@ export class TodoService {
 
   async findTodos(type: "day" | "week", date: Date): Promise<UsrTodoListDto[]> {
     const base = date ? dayjs(date) : dayjs();
-    let start: Date = new Date();
-    let end: Date = new Date();
+    let start = dayjs();
+    let end = dayjs();
 
     if (type === "day") {
-      start = base.startOf("day").toDate();
-      end = base.endOf("day").toDate();
+      start = base.startOf("day");
+      end = base.endOf("day");
     } else if (type === "week") {
-      start = base.startOf("week").toDate();
-      end = base.endOf("week").toDate();
+      start = base.startOf("week");
+      end = base.endOf("week");
     }
 
     const todos = await this.todoRepository.find({
-      where: { createdAt: Between(start, end) },
+      where: { createdAt: Between(start.toDate(), end.toDate()) },
       order: { createdAt: "ASC" },
-      relations: ["createdBy", "updatedBy"],
     });
-
     return todos.map((todo) => new UsrTodoListDto(todo));
   }
 

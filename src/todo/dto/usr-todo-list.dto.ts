@@ -1,16 +1,22 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { UsrTodoList } from "@/entities/usr-todo-list.entity";
+import { IsDate, IsNotEmpty, IsNumber, IsString } from "class-validator";
 
 export class UsrTodoListDto {
+  @IsNotEmpty()
+  @IsNumber()
+  id: number;
+
   @IsNotEmpty()
   @IsString()
   contents: string;
 
-  id: number;
-  isCompleted: boolean;
+  @IsNotEmpty()
+  @IsDate()
   createdAt: Date;
-  updatedAt: Date;
 
-  constructor(partial: Partial<UsrTodoListDto>) {
-    Object.assign(this, partial);
+  constructor(todo: UsrTodoList) {
+    this.id = todo.id;
+    this.contents = todo.contents;
+    this.createdAt = todo.createdAt;
   }
 }
