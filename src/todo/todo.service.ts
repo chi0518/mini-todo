@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { CreateTodoDto } from "./dto/create-todo.dto";
 import { InjectRepository } from "@nestjs/typeorm";
-import { UsrTodoList } from "@/entities/usr-todo-list.entity";
+import { UsrTodoList } from "../entities/usr-todo-list.entity";
 import { Between, Repository } from "typeorm";
 import { UsrTodoListDto } from "./dto/usr-todo-list.dto";
 import dayjs from "dayjs";
