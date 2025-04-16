@@ -26,7 +26,7 @@ describe("TodoService", () => {
   });
 
   it("할일 등록", async () => {
-    const mockCreateTodoDto = { contents: "Test Todo" };
+    const mockCreateTodoDto = { id: 1, contents: "Test Todo" };
     const saveSpy = jest.spyOn(todoRepository, "save").mockResolvedValue({
       id: 1,
       contents: "Test Todo",

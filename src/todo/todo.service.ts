@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { CreateTodoDto } from "./dto/create-todo.dto";
+import { UpdateTodoDto } from "./dto/update-todo.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UsrTodoList } from "../entities/usr-todo-list.entity";
 import { Between, Repository } from "typeorm";
@@ -39,5 +40,17 @@ export class TodoService {
 
     await this.todoRepository.save(todo);
     return { message: "할 일이 성공적으로 저장되었습니다!" };
+  }
+
+  async updateTodo(UpdateTodoDto: UpdateTodoDto): Promise<{ message: string }> {
+    const { id, contents } = UpdateTodoDto;
+    const todo = await this.todoRepository.findOneBy({ id });
+    if (!todo) {
+      throw new Error("Todo not found");
+    }
+    todo.contents = contents;
+
+    await this.todoRepository.upsert(todo, { conflictPaths: ["id"] });
+    return { message: "할 일이 성공적으로 수정되었습니다!" };
   }
 }

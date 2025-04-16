@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Post, Put, Query } from "@nestjs/common";
 import { TodoService } from "./todo.service";
 import { CreateTodoDto } from "./dto/create-todo.dto";
-
+import { UpdateTodoDto } from "./dto/update-todo.dto";
 @Controller("todo")
 export class TodoController {
   constructor(private readonly todoService: TodoService) {}
@@ -28,5 +28,10 @@ export class TodoController {
   @Post()
   async createTodo(@Body() createTodo: CreateTodoDto) {
     return await this.todoService.saveTodo(createTodo);
+  }
+
+  @Put()
+  async updateTodo(@Body() UpdateTodoDto: UpdateTodoDto) {
+    return await this.todoService.updateTodo(UpdateTodoDto);
   }
 }
